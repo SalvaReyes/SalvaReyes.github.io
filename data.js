@@ -5,7 +5,7 @@ window.PORTFOLIO_DATA = {
     heroTitle: "Building reliable systems, with a face and story behind them.",
     heroSubtitle:
       "Software Engineer with over 6 years of experience in C++, C#, Unreal Engine, and Unity. Specialized in game development, physics systems, build optimization, cross-platform deployment, and data-driven products powered by analytics and A/B testing.",
-    portraitImageUrl: "./assets/images/portrait-placeholder.svg",
+    portraitImageUrl: "./assets/images/portrait-placeholder.png",
     location: "Zurich, Switzerland",
     availability: "Open to opportunities",
     email: "salvador.gamedev@gmail.com",
