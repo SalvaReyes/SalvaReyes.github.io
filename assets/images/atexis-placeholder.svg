@@ -1,6 +1,0 @@
-<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1280 720">
-  <rect width="1280" height="720" fill="#11192f"/>
-  <rect x="60" y="60" width="1160" height="600" rx="28" fill="#6aa7ff" opacity="0.16"/>
-  <text x="640" y="310" text-anchor="middle" font-family="Arial, sans-serif" font-size="62" fill="#ecf2ff">Atexis screenshot placeholder</text>
-  <text x="640" y="390" text-anchor="middle" font-family="Arial, sans-serif" font-size="30" fill="#a9b6d3">Replace this file with your real project image</text>
-</svg>
