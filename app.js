@@ -14,17 +14,77 @@
       .replace(/'/g, "&#39;");
   }
 
+  function icon(name) {
+    const icons = {
+      copy: '<svg viewBox="0 0 24 24" aria-hidden="true"><path d="M9 9a2 2 0 0 1 2-2h8a2 2 0 0 1 2 2v8a2 2 0 0 1-2 2h-8a2 2 0 0 1-2-2V9Zm-6 6V5a2 2 0 0 1 2-2h10" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg>',
+      send: '<svg viewBox="0 0 24 24" aria-hidden="true"><path d="M21.7 3.3 10.8 14.2M21.7 3.3 14.8 20.7a.7.7 0 0 1-1.3 0l-3.4-8.3-8.3-3.4a.7.7 0 0 1 0-1.3L20.7 2.3a.7.7 0 0 1 1 .9Z" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg>',
+      link: '<svg viewBox="0 0 24 24" aria-hidden="true"><path d="M10 14 8.5 15.5a3.5 3.5 0 0 1-5-5L7 7a3.5 3.5 0 0 1 5 0M14 10l1.5-1.5a3.5 3.5 0 0 1 5 5L17 17a3.5 3.5 0 0 1-5 0M9 15l6-6" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg>',
+      eye: '<svg viewBox="0 0 24 24" aria-hidden="true"><path d="M2 12s3.5-6 10-6 10 6 10 6-3.5 6-10 6S2 12 2 12Zm10 3a3 3 0 1 0 0-6 3 3 0 0 0 0 6Z" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg>',
+      download: '<svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 3v12M7 10l5 5 5-5M5 21h14" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg>'
+    };
+    return icons[name] || '';
+  }
+
+  function renderHeroActionRow(label, buttons) {
+    if (!buttons || !buttons.length) return '';
+    return `
+      <div class="action-row">
+        <div class="action-label">${esc(label)}</div>
+        <div class="action-buttons">
+          ${buttons.join('')}
+        </div>
+      </div>
+    `;
+  }
+
+  function actionButton({ href = '', iconName = 'link', title = '', extra = '', targetBlank = false, dataAction = '' }) {
+    const target = targetBlank ? ' target="_blank" rel="noopener noreferrer"' : '';
+    const actionAttr = dataAction ? ` data-action="${esc(dataAction)}"` : '';
+    return `
+      <a class="icon-btn" href="${esc(href)}" title="${esc(title)}" aria-label="${esc(title)}"${target}${actionAttr} ${extra}>
+        ${icon(iconName)}
+      </a>
+    `;
+  }
+
+  function renderHeroActions() {
+    const rows = [];
+
+    if (settings.email) {
+      rows.push(renderHeroActionRow('Email', [
+        actionButton({ href: '#', iconName: 'copy', title: 'Copy email', dataAction: 'copy-email' }),
+        actionButton({ href: `mailto:${settings.email}`, iconName: 'send', title: 'Send email' })
+      ]));
+    }
+
+    if (settings.linkedinUrl) {
+      rows.push(renderHeroActionRow('LinkedIn', [
+        actionButton({ href: settings.linkedinUrl, iconName: 'send', title: 'Open LinkedIn', targetBlank: true })
+      ]));
+    }
+
+    if (settings.cvUrl) {
+      rows.push(renderHeroActionRow('Resume', [
+        actionButton({ href: settings.cvUrl, iconName: 'eye', title: 'View resume online', targetBlank: true }),
+        actionButton({ href: settings.cvUrl, iconName: 'download', title: 'Download resume', extra: 'download' })
+      ]));
+    }
+
+    if (!rows.length) return '';
+    return `<div class="hero-actions">${rows.join('')}</div>`;
+  }
+
   function renderMedia(media, altFallback) {
     if (!media || !media.url) {
       return '<div class="media-large"><div class="media-thumb">Media not available</div></div>';
     }
 
-    const title = esc(media.title || altFallback || "Portfolio media");
+    const title = esc(media.title || altFallback || 'Portfolio media');
     const caption = media.caption
       ? `<div class="media-overlay"><div class="media-caption">${esc(media.caption)}</div></div>`
-      : "";
+      : '';
 
-    if (media.type === "image") {
+    if (media.type === 'image') {
       return `
         <div class="media-large">
           <img src="${esc(media.url)}" alt="${title}" loading="lazy" />
@@ -33,7 +93,7 @@
       `;
     }
 
-    if (media.type === "youtube") {
+    if (media.type === 'youtube') {
       return `
         <div class="media-large">
           <iframe
@@ -48,7 +108,7 @@
       `;
     }
 
-    if (media.type === "video") {
+    if (media.type === 'video') {
       return `
         <div class="media-large">
           <video controls playsinline preload="metadata">
@@ -63,24 +123,23 @@
   }
 
   function renderThumbs(items, altFallback) {
-    if (!items || !items.length) return "";
+    if (!items || !items.length) return '';
 
     return `
       <div class="thumb-grid">
         ${items.slice(0, 3).map((media) => {
-          if (media.type === "image") {
-            return `<div class="media-thumb"><img src="${esc(media.url)}" alt="${esc(media.title || altFallback || "Gallery image")}" loading="lazy" /></div>`;
+          if (media.type === 'image') {
+            return `<div class="media-thumb"><img src="${esc(media.url)}" alt="${esc(media.title || altFallback || 'Gallery image')}" loading="lazy" /></div>`;
           }
-          const label = media.title || media.type || "Media";
+          const label = media.title || media.type || 'Media';
           return `<div class="media-thumb"><span>${esc(label)}</span></div>`;
-        }).join("")}
+        }).join('')}
       </div>
     `;
   }
 
-
   function renderExperience() {
-    if (!data.experience?.length) return "";
+    if (!data.experience?.length) return '';
     return `
       <section id="experience">
         <div class="section-head">
@@ -98,18 +157,18 @@
                     <div class="time">${esc(item.start)} — ${esc(item.end)}</div>
                     <div>
                       <div class="role">${esc(item.role)}</div>
-                      <div class="company">${esc(item.company)}${item.location ? ` · ${esc(item.location)}` : ""}</div>
+                      <div class="company">${esc(item.company)}${item.location ? ` · ${esc(item.location)}` : ''}</div>
                       <p>${esc(item.summary)}</p>
                       ${item.bullets?.length ? `
                         <ul class="bullet-list">
-                          ${item.bullets.map((bullet) => `<li>${esc(bullet)}</li>`).join("")}
+                          ${item.bullets.map((bullet) => `<li>${esc(bullet)}</li>`).join('')}
                         </ul>
-                      ` : ""}
+                      ` : ''}
                       ${item.tags?.length ? `
                         <div class="chip-list top-gap">
-                          ${item.tags.map((tag) => `<span class="chip">${esc(tag)}</span>`).join("")}
+                          ${item.tags.map((tag) => `<span class="chip">${esc(tag)}</span>`).join('')}
                         </div>
-                      ` : ""}
+                      ` : ''}
                     </div>
                   </div>
                 </div>
@@ -119,14 +178,14 @@
                 </div>
               </article>
             `;
-          }).join("")}
+          }).join('')}
         </div>
       </section>
     `;
   }
 
   function renderHighlights() {
-    if (!data.highlights?.length) return "";
+    if (!data.highlights?.length) return '';
     return `
       <section id="highlights">
         <div class="section-head">
@@ -141,25 +200,25 @@
                 <div>
                   <div class="eyebrow">Highlight</div>
                   <h3>${esc(item.title)}</h3>
-                  ${item.subtitle ? `<p>${esc(item.subtitle)}</p>` : ""}
-                  ${item.description ? `<p>${esc(item.description)}</p>` : ""}
+                  ${item.subtitle ? `<p>${esc(item.subtitle)}</p>` : ''}
+                  ${item.description ? `<p>${esc(item.description)}</p>` : ''}
                   ${item.tags?.length ? `
                     <div class="chip-list">
-                      ${item.tags.map((tag) => `<span class="chip">${esc(tag)}</span>`).join("")}
+                      ${item.tags.map((tag) => `<span class="chip">${esc(tag)}</span>`).join('')}
                     </div>
-                  ` : ""}
+                  ` : ''}
                 </div>
-                ${primary ? renderMedia(primary, item.title) : ""}
+                ${primary ? renderMedia(primary, item.title) : ''}
               </article>
             `;
-          }).join("")}
+          }).join('')}
         </div>
       </section>
     `;
   }
 
   function renderSkills() {
-    if (!data.skillGroups?.length) return "";
+    if (!data.skillGroups?.length) return '';
     return `
       <section id="skills">
         <div class="section-head">
@@ -170,22 +229,21 @@
             <article class="card skill-card">
               <h3>${esc(group.name)}</h3>
               <div class="chip-list">
-                ${group.items.map((item) => `<span class="chip">${esc(item)}</span>`).join("")}
+                ${group.items.map((item) => `<span class="chip">${esc(item)}</span>`).join('')}
               </div>
             </article>
-          `).join("")}
+          `).join('')}
         </div>
       </section>
     `;
   }
-
 
   app.innerHTML = `
     <nav class="nav">
       <div class="wrap nav-inner">
         <div class="brand">
           <div class="brand-badge">SR</div>
-          <div>${esc(settings.siteTitle || "Portfolio")}</div>
+          <div>${esc(settings.siteTitle || 'Portfolio')}</div>
         </div>
         <div class="nav-links">
           <a href="#experience">Experience</a>
@@ -199,19 +257,10 @@
       <div class="hero-grid">
         <div class="card hero-main">
           <div>
-            <div class="eyebrow">${esc(settings.heroEyebrow || "")}</div>
-            <h1>${esc(settings.heroTitle || settings.siteTitle || "Portfolio")}</h1>
-            <p>${esc(settings.heroSubtitle || "")}</p>
-            <div class="btn-row">
-              ${settings.email ? `<a class="btn primary" href="mailto:${esc(settings.email)}">Email me</a>` : ""}
-              ${settings.linkedinUrl ? `<a class="btn secondary" href="${esc(settings.linkedinUrl)}" target="_blank" rel="noopener noreferrer">LinkedIn</a>` : ""}
-              ${settings.githubUrl ? `<a class="btn secondary" href="${esc(settings.githubUrl)}" target="_blank" rel="noopener noreferrer">GitHub</a>` : ""}
-              ${settings.cvUrl ? `<a class="btn secondary" href="${esc(settings.cvUrl)}" target="_blank" rel="noopener noreferrer">View CV</a>` : ""}
-            </div>
-            <div class="hero-utility-list">
-              ${settings.location ? `<div class="utility-row"><div class="utility-label">Location</div><div>${esc(settings.location)}</div></div>` : ""}
-              ${settings.availability ? `<div class="utility-row"><div class="utility-label">Availability</div><div>${esc(settings.availability)}</div></div>` : ""}
-            </div>
+            <div class="eyebrow">${esc(settings.heroEyebrow || '')}</div>
+            <h1>${esc(settings.heroTitle || settings.siteTitle || 'Portfolio')}</h1>
+            <p>${esc(settings.heroSubtitle || '')}</p>
+            ${renderHeroActions()}
           </div>
         </div>
 
@@ -221,8 +270,8 @@
               <img src="${esc(settings.portraitImageUrl || './assets/images/portrait-placeholder.svg')}" alt="Portrait" loading="eager" />
             </div>
             <div class="portrait-caption">
-              ${settings.location ? `<strong>${esc(settings.location)}</strong><br />` : ""}
-              ${esc(settings.availability || "")}
+              ${settings.location ? `<strong>${esc(settings.location)}</strong><br />` : ''}
+              ${esc(settings.availability || '')}
             </div>
           </article>
         </aside>
@@ -235,4 +284,22 @@
       ${renderSkills()}
     </main>
   `;
+
+  app.addEventListener('click', async (event) => {
+    const link = event.target.closest('[data-action="copy-email"]');
+    if (!link || !settings.email) return;
+    event.preventDefault();
+    try {
+      await navigator.clipboard.writeText(settings.email);
+      const original = link.innerHTML;
+      link.innerHTML = '<span class="icon-btn-feedback">Copied</span>';
+      link.classList.add('copied');
+      setTimeout(() => {
+        link.innerHTML = original;
+        link.classList.remove('copied');
+      }, 1200);
+    } catch (error) {
+      window.prompt('Copy this email:', settings.email);
+    }
+  });
 })();
