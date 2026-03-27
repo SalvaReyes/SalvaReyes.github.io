@@ -59,14 +59,6 @@ window.PORTFOLIO_DATA = {
           title: "Demo video",
           caption: "Short demo clip",
           isPrimary: true
-        },
-        {
-          id: "m1-image",
-          type: "image",
-          url: "./assets/images/iction-placeholder.svg",
-          title: "Iction screenshot placeholder",
-          caption: "Replace this file with your real image asset.",
-          isPrimary: false
         }
       ]
     },
@@ -93,14 +85,6 @@ window.PORTFOLIO_DATA = {
           title: "Vehicle physics",
           caption: "Handling / physics screenshot",
           isPrimary: true
-        },
-        {
-          id: "m2-image",
-          type: "image",
-          url: "./assets/images/axes-placeholder.svg",
-          title: "Axes screenshot placeholder",
-          caption: "Replace this file with your real image asset.",
-          isPrimary: false
         }
       ]
     },
@@ -127,14 +111,6 @@ window.PORTFOLIO_DATA = {
           title: "Cockpit training",
           caption: "Interactive simulation view",
           isPrimary: true
-        },
-        {
-          id: "m3-image",
-          type: "image",
-          url: "./assets/images/atexis-placeholder.svg",
-          title: "Atexis screenshot placeholder",
-          caption: "Replace this file with your real image asset.",
-          isPrimary: false
         }
       ]
     }
