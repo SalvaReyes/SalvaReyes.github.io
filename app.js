@@ -246,6 +246,7 @@
           <div>${esc(settings.siteTitle || 'Portfolio')}</div>
         </div>
         <div class="nav-links">
+          <a href="#top">Contact</a>
           <a href="#experience">Experience</a>
           <a href="#highlights">Highlights</a>
           <a href="#skills">Skills</a>
