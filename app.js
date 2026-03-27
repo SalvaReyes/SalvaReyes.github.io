@@ -78,26 +78,6 @@
     `;
   }
 
-  function renderAbout() {
-    if (!data.about?.length) return "";
-    return `
-      <section id="about">
-        <div class="section-head">
-          <div>
-            <h2>About</h2>
-          </div>
-        </div>
-        <div class="grid-2">
-          ${data.about.map((item) => `
-            <article class="card panel">
-              <h3>${esc(item.title)}</h3>
-              <p>${esc(item.description)}</p>
-            </article>
-          `).join("")}
-        </div>
-      </section>
-    `;
-  }
 
   function renderExperience() {
     if (!data.experience?.length) return "";
@@ -199,25 +179,6 @@
     `;
   }
 
-  function renderContact() {
-    return `
-      <section id="contact-list">
-        <div class="section-head">
-          <div><h2>Contact</h2></div>
-        </div>
-        <div class="grid-2">
-          ${(data.contact || []).map((item) => `
-            <article class="card panel">
-              <div class="eyebrow">${esc(item.label)}</div>
-              ${item.url
-                ? `<a href="${esc(item.url)}" target="_blank" rel="noopener noreferrer">${esc(item.value)}</a>`
-                : `<p>${esc(item.value)}</p>`}
-            </article>
-          `).join("")}
-        </div>
-      </section>
-    `;
-  }
 
   app.innerHTML = `
     <nav class="nav">
@@ -227,8 +188,6 @@
           <div>${esc(settings.siteTitle || "Portfolio")}</div>
         </div>
         <div class="nav-links">
-          <a href="#contact">Contact</a>
-          <a href="#about">About</a>
           <a href="#experience">Experience</a>
           <a href="#highlights">Highlights</a>
           <a href="#skills">Skills</a>
@@ -236,7 +195,7 @@
       </div>
     </nav>
 
-    <header class="hero wrap" id="contact">
+    <header class="hero wrap" id="top">
       <div class="hero-grid">
         <div class="card hero-main">
           <div>
@@ -271,15 +230,9 @@
     </header>
 
     <main class="wrap">
-      ${renderAbout()}
       ${renderExperience()}
       ${renderHighlights()}
       ${renderSkills()}
-      ${renderContact()}
     </main>
-
-    <footer class="wrap footer">
-      Static portfolio for GitHub Pages. No Apps Script. No spreadsheet. No OAuth permissions.
-    </footer>
   `;
 })();
