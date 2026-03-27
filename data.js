@@ -2,7 +2,7 @@ window.PORTFOLIO_DATA = {
   settings: {
     siteTitle: "Salvador Reyes · Developer Portfolio",
     heroEyebrow: "Aeronautical & Software Engineer",
-    heroTitle: "Building reliable systems, with a face and story behind them.",
+    heroTitle: "BBuilding reliable systems, with a face and story behind them.",
     heroSubtitle:
       "Software Engineer with over 6 years of experience in C++, C#, Unreal Engine, and Unity. Specialized in game development, physics systems, build optimization, cross-platform deployment, and data-driven products powered by analytics and A/B testing.",
     portraitImageUrl: "./assets/images/portrait-placeholder.png",
