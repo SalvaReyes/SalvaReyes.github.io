@@ -2,12 +2,12 @@ window.PORTFOLIO_DATA = {
   settings: {
     siteTitle: "Salvador Reyes · Developer Portfolio",
     heroEyebrow: "Aeronautical & Software Engineer",
-    heroTitle: "Building reliable systems, with a face and story behind them.",
+    heroTitle: "Building reliable systems with a human touch.",
     heroSubtitle:
-      "Software Engineer with over 6 years of experience in C++, C#, Unreal Engine, and Unity. Specialized in game development, physics systems, build optimization, cross-platform deployment, and data-driven products powered by analytics and A/B testing.",
+      "Software Engineer with 6+ years of experience in C++, C#, Unreal Engine, and Unity. Specialized in gameplay programming, physics systems, build optimization, cross-platform deployment, and data-informed product iteration supported by analytics and A/B testing.",
     portraitImageUrl: "./assets/images/portrait-placeholder.png",
     location: "Zurich, Switzerland",
-    availability: "Open to opportunities",
+    availability: "Open to new opportunities",
     email: "salvador.gamedev@gmail.com",
     linkedinUrl: "https://www.linkedin.com/in/salvador-reyes-mart%C3%ADnez-62647398/",
     githubUrl: "",
@@ -16,22 +16,58 @@ window.PORTFOLIO_DATA = {
 
   about: [
     {
-      id: "interactive-systems",
+      id: "what-im-looking-for",
       order: 1,
-      title: "Interactive systems",
-      description: "Player controllers, interactions, camera systems..."
+      title: "What I'm Looking For",
+      description: "A product-focused engineering role where I can build robust gameplay and software systems, collaborate closely with design and art, and continue growing in technical ownership.",
+      sprite: {
+        sheetUrl: "./assets/images/sprites/Barril_Gran_Roca_Explosion.png",
+        cols: 4,
+        rows: 4,
+        frameCount: 16,
+        maxDisplay: 96,
+        scale: 2,
+        offsetX: 0,
+        pingPong: true,
+        offsetY: 0,
+        fps: 8
+      }
     },
     {
-      id: "simulation-mindset",
+      id: "what-im-passionate-about",
       order: 2,
-      title: "Simulation mindset",
-      description: "Experience translating real-world systems into interactive workflows..."
+      title: "What I'm Passionate About",
+      description: "Designing interactive experiences that feel great to players, from controls and physics to performance tuning, fast iteration loops, and data-informed decisions that improve the final product.",
+      sprite: {
+        sheetUrl: "./assets/images/sprites/PalmeraTrampa.png",
+        cols: 5,
+        rows: 3,
+        frameCount: 15,
+        maxDisplay: 96,
+        scale: 2,
+        offsetX: 0,
+        offsetY: 0,
+        pingPong: true,
+        fps: 6
+      }
     },
     {
-      id: "optimization",
+      id: "what-i-offer",
       order: 3,
-      title: "Optimization",
-      description: "Profiling, debugging and runtime stability..."
+      title: "What I Offer to a Company",
+      description: "Hands-on end-to-end delivery, strong technical execution in C#/C++ with Unity and Unreal, a production mindset, and the ability to turn ambiguous ideas into reliable, shippable features.",
+      sprite: {
+        sheetUrl: "./assets/images/sprites/Run.png",
+        cols: 4,
+        rows: 16,
+        frameCount: 64,
+        maxDisplay: 96,
+        scale: 3,
+        offsetX: 0,
+        pingPong: true,
+        offsetY: 0,
+        fps: 8
+      }
     }
   ],
 
@@ -46,11 +82,21 @@ window.PORTFOLIO_DATA = {
       location: "Spain",
       summary: "Sole software engineer on the project, working alongside a 2D artist and a game designer.",
       bullets: [
-        "Core gameplay systems",
-        "Cross-device progression & Addressables",
-        "Google Play, Epic, Steam, CrazyGames"
+        "Designed and implemented core gameplay systems",
+        "Implemented cross-device progression and Addressables workflows",
+        "Prepared and released builds across multiple stores"
       ],
-      tags: ["C#", "Unity", "C++", "Unreal", "Data-Driven", "Mobile", "PC"],
+      links: [
+        {
+          label: "PC · CrazyGames",
+          url: "https://www.crazygames.com/game/john-mambo---pixel-arcade-shooter-xdn"
+        },
+        {
+          label: "Android · Google Play",
+          url: "https://play.google.com/store/apps/details?id=com.JohnMambo.RetroPixelAction"
+        }
+      ],
+      tags: ["C#", "Unity", "C++", "Unreal", "Data Analytics"],
       media: [
         {
           id: "m1",
@@ -70,13 +116,23 @@ window.PORTFOLIO_DATA = {
       role: "Software Engineer | Extreme Car Driving Simulator",
       company: "Axes In Motion",
       location: "Spain",
-      summary: "Design, enhancement, and maintenance of the car physics engine.",
+      summary: "Contributed to the design, improvement, and maintenance of the vehicle physics engine.",
       bullets: [
-        "Mobile Development",
-        "Unity Physics Engine",
-        "Google Play, App Store"
+        "Helped evolve the product with a data-driven development approach",
+        "Improved realistic vehicle physics in an open-world driving game",
+        "Contributed to a title with over 500 million downloads on Google Play"
       ],
-      tags: ["C#", "Unity", "Vehicle Physics", "Data-Driven", "Mobile", "PC"],
+      links: [
+        {
+          label: "Android · Google Play",
+          url: "https://play.google.com/store/apps/details?id=com.aim.racing"
+        },
+        {
+          label: "iOS · App Store",
+          url: "https://apps.apple.com/ch/app/extreme-car-driving-simulator/id959498315?l=en-GB"
+        }
+      ],
+      tags: ["C#", "Unity", "Vehicle Physics", "Data Analytics", "A/B Test"],
       media: [
         {
           id: "m2",
@@ -98,9 +154,9 @@ window.PORTFOLIO_DATA = {
       location: "Spain",
       summary: "Interactive 3D training for pilots and maintenance personnel.",
       bullets: [
-        "Operational & maintenance procedures",
-        "Cockpit 3D simulation",
-        "Virtual Reality Environment"
+        "Developed operational and maintenance training procedures",
+        "Built cockpit-focused 3D simulation experiences",
+        "Delivered features for virtual reality training environments"
       ],
       tags: ["C#", "Unity", "C++", "CBT", "Embedded", "VR"],
       media: [
@@ -121,9 +177,19 @@ window.PORTFOLIO_DATA = {
       id: "vehicle-physics",
       order: 1,
       title: "Realistic vehicle physics engine",
-      subtitle: "Rocket-boosted cars that can jump in an open world",
-      description: "",
-      tags: ["C#", "Unity"],
+      subtitle: "A self-initiated project where I designed and built an open-world arcade driving experience featuring rocket-boosted cars, jump mechanics, and physics-driven stunts, taking it from concept to a playable, market-ready product.",
+      description: "Owned the full development cycle, from concept and gameplay design to physics tuning, implementation, and publishing preparation, with a strong focus on game feel, stability, and player engagement.",
+      links: [
+        {
+          label: "Android · Google Play Games",
+          url: "https://play.google.com/pc-store/games/details?id=com.Rocket.Car.Games.Rocket.Car.Speed.Driving"
+        },
+        {
+          label: "Windows · Google Play Games",
+          url: "https://play.google.com/pc-store/games/details?id=com.Rocket.Car.Games.Rocket.Car.Speed.Driving"
+        }
+      ],
+      tags: ["C#", "Unity", "Blender", "Shaders", "VFX", "Particle System", "Analytics", "Ads", "In App Purchases"],
       media: [
         {
           id: "h1",
@@ -146,11 +212,11 @@ window.PORTFOLIO_DATA = {
         "Unity",
         "Unreal",
         "Python",
-        "Matlab",
+        "MATLAB",
         "BigQuery",
         "Firebase",
         "Remote Config",
-        "Admob"
+        "AdMob"
       ]
     },
     {
@@ -158,6 +224,23 @@ window.PORTFOLIO_DATA = {
       items: ["Scrum", "Kanban", "Confluence", "Jira", "Git"]
     }
   ],
+
+  thanks: {
+    eyebrow: "Thank You",
+    title: "Thanks for reaching the end of my portfolio.",
+    message: "I really appreciate your time. If my background matches what your team needs, I'd be happy to connect and discuss how I can contribute.",
+    sprite: {
+      sheetUrl: "./assets/images/sprites/Mambo-Macarena.png",
+      cols: 13,
+      rows: 3,
+      frameCount: 39,
+      maxDisplay: 128,
+      scale: 2,
+      offsetX: 0,
+      offsetY: 0,
+      fps: 8
+    }
+  },
 
   contact: [
     {

@@ -1,0 +1,76 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="768" height="128" viewBox="0 0 768 128" role="img" aria-label="Thank you waving sprite strip placeholder">
+  <defs>
+    <style>
+      .body { stroke: #8ef0d2; stroke-width: 8; stroke-linecap: round; stroke-linejoin: round; fill: none; }
+      .head { fill: #6aa7ff; }
+      .accent { fill: rgba(142, 240, 210, 0.9); }
+      .ground { stroke: rgba(255,255,255,0.18); stroke-width: 3; }
+    </style>
+  </defs>
+
+  <g transform="translate(0 0)">
+    <line class="ground" x1="20" y1="112" x2="108" y2="112" />
+    <circle class="head" cx="64" cy="34" r="11" />
+    <line class="body" x1="64" y1="48" x2="64" y2="78" />
+    <line class="body" x1="64" y1="56" x2="48" y2="64" />
+    <line class="body" x1="64" y1="56" x2="84" y2="48" />
+    <line class="body" x1="64" y1="78" x2="54" y2="102" />
+    <line class="body" x1="64" y1="78" x2="74" y2="102" />
+    <circle class="accent" cx="96" cy="30" r="3" />
+  </g>
+
+  <g transform="translate(128 0)">
+    <line class="ground" x1="20" y1="112" x2="108" y2="112" />
+    <circle class="head" cx="64" cy="34" r="11" />
+    <line class="body" x1="64" y1="48" x2="64" y2="78" />
+    <line class="body" x1="64" y1="56" x2="47" y2="61" />
+    <line class="body" x1="64" y1="56" x2="90" y2="40" />
+    <line class="body" x1="64" y1="78" x2="54" y2="102" />
+    <line class="body" x1="64" y1="78" x2="74" y2="102" />
+    <circle class="accent" cx="98" cy="28" r="4" />
+  </g>
+
+  <g transform="translate(256 0)">
+    <line class="ground" x1="20" y1="112" x2="108" y2="112" />
+    <circle class="head" cx="64" cy="34" r="11" />
+    <line class="body" x1="64" y1="48" x2="64" y2="78" />
+    <line class="body" x1="64" y1="56" x2="47" y2="61" />
+    <line class="body" x1="64" y1="56" x2="94" y2="34" />
+    <line class="body" x1="64" y1="78" x2="54" y2="102" />
+    <line class="body" x1="64" y1="78" x2="74" y2="102" />
+    <circle class="accent" cx="100" cy="24" r="4.5" />
+  </g>
+
+  <g transform="translate(384 0)">
+    <line class="ground" x1="20" y1="112" x2="108" y2="112" />
+    <circle class="head" cx="64" cy="34" r="11" />
+    <line class="body" x1="64" y1="48" x2="64" y2="78" />
+    <line class="body" x1="64" y1="56" x2="47" y2="61" />
+    <line class="body" x1="64" y1="56" x2="90" y2="40" />
+    <line class="body" x1="64" y1="78" x2="54" y2="102" />
+    <line class="body" x1="64" y1="78" x2="74" y2="102" />
+    <circle class="accent" cx="98" cy="28" r="4" />
+  </g>
+
+  <g transform="translate(512 0)">
+    <line class="ground" x1="20" y1="112" x2="108" y2="112" />
+    <circle class="head" cx="64" cy="34" r="11" />
+    <line class="body" x1="64" y1="48" x2="64" y2="78" />
+    <line class="body" x1="64" y1="56" x2="47" y2="61" />
+    <line class="body" x1="64" y1="56" x2="86" y2="45" />
+    <line class="body" x1="64" y1="78" x2="54" y2="102" />
+    <line class="body" x1="64" y1="78" x2="74" y2="102" />
+    <circle class="accent" cx="96" cy="30" r="3.5" />
+  </g>
+
+  <g transform="translate(640 0)">
+    <line class="ground" x1="20" y1="112" x2="108" y2="112" />
+    <circle class="head" cx="64" cy="34" r="11" />
+    <line class="body" x1="64" y1="48" x2="64" y2="78" />
+    <line class="body" x1="64" y1="56" x2="48" y2="64" />
+    <line class="body" x1="64" y1="56" x2="84" y2="48" />
+    <line class="body" x1="64" y1="78" x2="54" y2="102" />
+    <line class="body" x1="64" y1="78" x2="74" y2="102" />
+    <circle class="accent" cx="96" cy="30" r="3" />
+  </g>
+</svg>
