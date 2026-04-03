@@ -94,10 +94,21 @@
     }
 
     if (media.type === 'youtube') {
+      const youtubeUrl = (() => {
+        try {
+          const parsed = new URL(media.url);
+          parsed.searchParams.set('mute', '1');
+          return parsed.toString();
+        } catch (error) {
+          const separator = String(media.url).includes('?') ? '&' : '?';
+          return `${media.url}${separator}mute=1`;
+        }
+      })();
+
       return `
         <div class="media-large">
           <iframe
-            src="${esc(media.url)}"
+            src="${esc(youtubeUrl)}"
             title="${title}"
             loading="lazy"
             referrerpolicy="strict-origin-when-cross-origin"
@@ -111,7 +122,7 @@
     if (media.type === 'video') {
       return `
         <div class="media-large">
-          <video controls playsinline preload="metadata">
+          <video controls playsinline preload="metadata" muted>
             <source src="${esc(media.url)}" />
           </video>
           ${caption}
@@ -138,6 +149,111 @@
     `;
   }
 
+  function getSafeExternalUrl(url) {
+    const value = String(url || '').trim();
+    return /^https?:\/\//i.test(value) ? value : '';
+  }
+
+  function getSafeSpriteSheetUrl(url) {
+    const value = String(url || '').trim();
+    return /^(https?:\/\/|\.{0,2}\/|assets\/)/i.test(value) ? value : '';
+  }
+
+  function renderSpritePlayer(sprite, extraClass = '') {
+    if (!sprite?.sheetUrl) return '';
+    const className = String(extraClass || '').trim();
+    const classSuffix = className ? ` ${className}` : '';
+    const cols = Number(sprite.cols || sprite.columns || sprite.frames || 1) || 1;
+    const rows = Number(sprite.rows || 1) || 1;
+    const totalFrames = Number(sprite.frameCount || sprite.totalFrames || sprite.frames || cols * rows) || (cols * rows);
+    const pingPong = !!sprite.pingPong;
+    const scale = Number(sprite.scale ?? 1) || 1;
+    const offsetX = Number(sprite.offsetX ?? sprite.offset?.x ?? 0) || 0;
+    const offsetY = Number(sprite.offsetY ?? sprite.offset?.y ?? 0) || 0;
+    return `
+      <div
+        class="sprite-player${classSuffix}"
+        aria-hidden="true"
+        data-sprite-sheet="${esc(getSafeSpriteSheetUrl(sprite.sheetUrl))}"
+        data-sprite-cols="${esc(cols)}"
+        data-sprite-rows="${esc(rows)}"
+        data-sprite-total-frames="${esc(totalFrames)}"
+        data-sprite-max-display="${esc(sprite.maxDisplay || 128)}"
+        data-sprite-scale="${esc(scale)}"
+        data-sprite-offset-x="${esc(offsetX)}"
+        data-sprite-offset-y="${esc(offsetY)}"
+        data-sprite-pingpong="${pingPong ? 'true' : 'false'}"
+        data-sprite-fps="${esc(sprite.fps || 8)}"></div>
+    `;
+  }
+
+  function renderExternalLinks(links, groupLabel = 'Store Links', showLabel = true) {
+    if (!links?.length) return '';
+
+    const validLinks = links
+      .map((item) => ({
+        label: item?.label || 'Open link',
+        url: getSafeExternalUrl(item?.url)
+      }))
+      .filter((item) => item.url);
+
+    if (!validLinks.length) return '';
+
+    return `
+      <div class="meta-group meta-group-links">
+        ${showLabel ? `<div class="meta-label">${esc(groupLabel)}</div>` : ''}
+        <div class="external-links">
+          ${validLinks.map((item) => `
+            <a class="external-link" href="${esc(item.url)}" target="_blank" rel="noopener noreferrer" aria-label="${esc(item.label)}">
+              <span class="external-link-icon">${icon('link')}</span>
+              <span>${esc(item.label)}</span>
+            </a>
+          `).join('')}
+        </div>
+      </div>
+    `;
+  }
+
+  function renderTagGroup(tags, groupLabel = 'Tech Stack', showLabel = true) {
+    if (!tags?.length) return '';
+    return `
+      <div class="meta-group meta-group-tags">
+        ${showLabel ? `<div class="meta-label">${esc(groupLabel)}</div>` : ''}
+        <div class="chip-list">
+          ${tags.map((tag) => `<span class="chip tag-chip">${esc(tag)}</span>`).join('')}
+        </div>
+      </div>
+    `;
+  }
+
+  function renderTimelineMetaRows(item) {
+    const hasLinks = !!item?.links?.length;
+    const hasTags = !!item?.tags?.length;
+    if (!hasLinks && !hasTags) return '';
+
+    const rows = [];
+
+    if (hasLinks) {
+      rows.push(`
+        <div class="timeline-meta-row">
+          <div class="timeline-meta-label-cell"><div class="meta-label">Store Links</div></div>
+          <div class="timeline-meta-value-cell">${renderExternalLinks(item.links, 'Store Links', false)}</div>
+        </div>
+      `);
+    }
+
+    if (hasTags) {
+      rows.push(`
+        <div class="timeline-meta-row">
+          <div class="timeline-meta-label-cell"><div class="meta-label">Tech Stack</div></div>
+          <div class="timeline-meta-value-cell">${renderTagGroup(item.tags, 'Tech Stack', false)}</div>
+        </div>
+      `);
+    }
+
+    return `<div class="timeline-meta-rows">${rows.join('')}</div>`;
+  }
+
   function renderExperience() {
     if (!data.experience?.length) return '';
     return `
@@ -154,8 +270,10 @@
               <article class="card timeline-item">
                 <div class="timeline-content">
                   <div class="timeline-top">
-                    <div class="time">${esc(item.start)} — ${esc(item.end)}</div>
-                    <div>
+                    <div class="timeline-meta">
+                      <div class="time">${esc(item.start)} — ${esc(item.end)}</div>
+                    </div>
+                    <div class="timeline-main">
                       <div class="role">${esc(item.role)}</div>
                       <div class="company">${esc(item.company)}${item.location ? ` · ${esc(item.location)}` : ''}</div>
                       <p>${esc(item.summary)}</p>
@@ -164,13 +282,9 @@
                           ${item.bullets.map((bullet) => `<li>${esc(bullet)}</li>`).join('')}
                         </ul>
                       ` : ''}
-                      ${item.tags?.length ? `
-                        <div class="chip-list top-gap">
-                          ${item.tags.map((tag) => `<span class="chip">${esc(tag)}</span>`).join('')}
-                        </div>
-                      ` : ''}
                     </div>
                   </div>
+                  ${renderTimelineMetaRows(item)}
                 </div>
                 <div class="media-stack">
                   ${renderMedia(primary, item.role)}
@@ -182,6 +296,132 @@
         </div>
       </section>
     `;
+  }
+
+  function renderAbout() {
+    if (!data.about?.length) return '';
+    const items = [...data.about]
+      .sort((a, b) => (a.order || 0) - (b.order || 0))
+      .slice(0, 3);
+
+    return `
+      <section id="about">
+        <div class="section-head">
+          <div><h2>About</h2></div>
+        </div>
+        <div class="about-grid">
+          ${items.map((item) => `
+            <article class="card about-card">
+              <h3>${esc(item.title)}</h3>
+              <p>${esc(item.description || '')}</p>
+              ${item.sprite?.sheetUrl ? `<div class="about-sprite-zone">${renderSpritePlayer(item.sprite, 'about-sprite')}</div>` : ''}
+            </article>
+          `).join('')}
+        </div>
+      </section>
+    `;
+  }
+
+  function renderThanks() {
+    if (!data.thanks) return '';
+    return `
+      <section id="thanks">
+        <article class="card thanks-card">
+          <div class="thanks-copy">
+            <div class="eyebrow">${esc(data.thanks.eyebrow || 'Thanks')}</div>
+            <h2>${esc(data.thanks.title || 'Thanks for reading until the end.')}</h2>
+            <p>${esc(data.thanks.message || '')}</p>
+          </div>
+          ${data.thanks.sprite?.sheetUrl ? `
+            <div class="thanks-sprite-zone">
+              ${renderSpritePlayer(data.thanks.sprite, 'thanks-sprite')}
+            </div>
+          ` : ''}
+        </article>
+      </section>
+    `;
+  }
+
+  function initSpritePlayers() {
+    const sprites = app.querySelectorAll('.sprite-player[data-sprite-sheet]');
+    if (!sprites.length) return;
+
+    const reduceMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+
+    sprites.forEach((spriteEl) => {
+      const sheetUrl = spriteEl.getAttribute('data-sprite-sheet') || '';
+      const cols = Math.max(1, Number(spriteEl.getAttribute('data-sprite-cols')) || 1);
+      const rows = Math.max(1, Number(spriteEl.getAttribute('data-sprite-rows')) || 1);
+      const maxDisplay = Math.max(24, Number(spriteEl.getAttribute('data-sprite-max-display')) || 128);
+      const scaleMultiplier = Math.max(0.1, Number(spriteEl.getAttribute('data-sprite-scale')) || 1);
+      const offsetX = Number(spriteEl.getAttribute('data-sprite-offset-x')) || 0;
+      const offsetY = Number(spriteEl.getAttribute('data-sprite-offset-y')) || 0;
+      const fps = Math.max(1, Number(spriteEl.getAttribute('data-sprite-fps')) || 8);
+      const requestedFrames = Math.max(1, Number(spriteEl.getAttribute('data-sprite-total-frames')) || (cols * rows));
+      const pingPongAttr = (spriteEl.getAttribute('data-sprite-pingpong') || '').toLowerCase();
+      const usePingPong = pingPongAttr === 'true' || pingPongAttr === '1';
+
+      if (!sheetUrl) return;
+
+      const image = new Image();
+      image.onload = () => {
+        const frameWidth = Math.max(1, Math.floor(image.naturalWidth / cols));
+        const frameHeight = Math.max(1, Math.floor(image.naturalHeight / rows));
+        const maxFrames = cols * rows;
+        const totalFrames = Math.max(1, Math.min(requestedFrames, maxFrames));
+        const fitScale = Math.min(1, maxDisplay / Math.max(frameWidth, frameHeight));
+        const finalScale = fitScale * scaleMultiplier;
+        const displayWidth = Math.max(24, Math.round(frameWidth * finalScale));
+        const displayHeight = Math.max(24, Math.round(frameHeight * finalScale));
+
+        spriteEl.style.width = `${displayWidth}px`;
+        spriteEl.style.height = `${displayHeight}px`;
+        spriteEl.style.backgroundImage = `url("${sheetUrl}")`;
+        spriteEl.style.backgroundSize = `${displayWidth * cols}px ${displayHeight * rows}px`;
+        spriteEl.style.backgroundPosition = '0 0';
+
+        const setFrame = (index) => {
+          const normalized = index % totalFrames;
+          const col = normalized % cols;
+          const row = Math.floor(normalized / cols);
+          spriteEl.style.backgroundPosition = `${-col * displayWidth + offsetX}px ${-row * displayHeight + offsetY}px`;
+        };
+
+        setFrame(0);
+        if (reduceMotion) return;
+
+        let frame = 0;
+        let direction = 1;
+        let lastTimestamp = 0;
+        const frameDuration = 1000 / fps;
+
+        const tick = (timestamp) => {
+          if (!spriteEl.isConnected) return;
+
+          if (!lastTimestamp) {
+            lastTimestamp = timestamp;
+          }
+
+          if (timestamp - lastTimestamp >= frameDuration) {
+            if (usePingPong && totalFrames > 1) {
+              frame += direction;
+              if (frame >= totalFrames - 1 || frame <= 0) {
+                direction *= -1;
+              }
+            } else {
+              frame = (frame + 1) % totalFrames;
+            }
+            setFrame(frame);
+            lastTimestamp = timestamp;
+          }
+
+          window.requestAnimationFrame(tick);
+        };
+
+        window.requestAnimationFrame(tick);
+      };
+      image.src = sheetUrl;
+    });
   }
 
   function renderHighlights() {
@@ -202,11 +442,8 @@
                   <h3>${esc(item.title)}</h3>
                   ${item.subtitle ? `<p>${esc(item.subtitle)}</p>` : ''}
                   ${item.description ? `<p>${esc(item.description)}</p>` : ''}
-                  ${item.tags?.length ? `
-                    <div class="chip-list">
-                      ${item.tags.map((tag) => `<span class="chip">${esc(tag)}</span>`).join('')}
-                    </div>
-                  ` : ''}
+                  ${renderExternalLinks(item.links)}
+                  ${renderTagGroup(item.tags)}
                 </div>
                 ${primary ? renderMedia(primary, item.title) : ''}
               </article>
@@ -247,6 +484,7 @@
         </div>
         <div class="nav-links">
           <a href="#top">Contact</a>
+          <a href="#about">About</a>
           <a href="#experience">Experience</a>
           <a href="#highlights">Highlights</a>
           <a href="#skills">Skills</a>
@@ -280,11 +518,15 @@
     </header>
 
     <main class="wrap">
+      ${renderAbout()}
       ${renderExperience()}
       ${renderHighlights()}
       ${renderSkills()}
+      ${renderThanks()}
     </main>
   `;
+
+  initSpritePlayers();
 
   app.addEventListener('click', async (event) => {
     const link = event.target.closest('[data-action="copy-email"]');
