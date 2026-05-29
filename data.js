@@ -4,7 +4,7 @@ window.PORTFOLIO_DATA = {
     heroEyebrow: "Aeronautical & Software Engineer",
     heroTitle: "Building reliable systems with a human touch.",
     heroSubtitle:
-      "Software Engineer with 6+ years of experience in C++, C#, Unreal Engine, and Unity. Specialized in gameplay programming, physics systems, build optimization, cross-platform deployment, and data-informed product iteration supported by analytics and A/B testing.",
+      "Software Engineer with 6+ years of experience in C++, C#, Unreal Engine, and Unity. Specialized in gameplay programming, multiplayer systems, physics systems, build optimization, cross-platform deployment, and data-informed product iteration supported by analytics and A/B testing.",
     portraitImageUrl: "./assets/images/portrait-placeholder.png",
     location: "Zurich, Switzerland",
     availability: "Open to new opportunities",
@@ -19,25 +19,25 @@ window.PORTFOLIO_DATA = {
       id: "what-im-looking-for",
       order: 1,
       title: "What I'm Looking For",
-      description: "A product-focused engineering role where I can build robust gameplay and software systems, collaborate closely with design and art, and continue growing in technical ownership.",
+      description: "A role where I can create value by connecting my background in simulation and engineering with my experience building reliable software. I enjoy turning technical ideas into practical tools, interactive systems, and products people can actually use.",
       sprite: {
-        sheetUrl: "./assets/images/sprites/Barril_Gran_Roca_Explosion.png",
+        sheetUrl: "./assets/images/sprites/avion_sin_fondo_transparente.png",
         cols: 4,
-        rows: 4,
-        frameCount: 16,
-        maxDisplay: 96,
+        rows: 2,
+        frameCount: 8,
+        maxDisplay: 112,
         scale: 2,
         offsetX: 0,
-        pingPong: true,
+        pingPong: false,
         offsetY: 0,
-        fps: 8
+        fps: 10
       }
     },
     {
       id: "what-im-passionate-about",
       order: 2,
       title: "What I'm Passionate About",
-      description: "Designing interactive experiences that feel great to players, from controls and physics to performance tuning, fast iteration loops, and data-informed decisions that improve the final product.",
+      description: "We are living through a moment where almost any idea can be shaped into something usable faster than ever. I like keeping my frameworks up to date, exploring what AI makes possible, and using those new tools to prototype, learn, and build better software.",
       sprite: {
         sheetUrl: "./assets/images/sprites/PalmeraTrampa.png",
         cols: 5,
@@ -55,7 +55,7 @@ window.PORTFOLIO_DATA = {
       id: "what-i-offer",
       order: 3,
       title: "What I Offer to a Company",
-      description: "Hands-on end-to-end delivery, strong technical execution in C#/C++ with Unity and Unreal, a production mindset, and the ability to turn ambiguous ideas into reliable, shippable features.",
+      description: "The perspective that comes from working on multidisciplinary projects across different domains and stages of development. I can move between early prototypes, production systems, technical problem solving, and final delivery while keeping both the engineering details and the product goal in view.",
       sprite: {
         sheetUrl: "./assets/images/sprites/Run.png",
         cols: 4,

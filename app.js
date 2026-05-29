@@ -432,13 +432,16 @@
           <div><h2>Highlights</h2></div>
         </div>
         <div class="feature-list">
-          ${data.highlights.map((item) => {
+          ${data.highlights.map((item, index) => {
             const media = item.media || [];
             const primary = media.find((m) => m.isPrimary) || media[0] || null;
             return `
               <article class="card project-highlight">
-                <div>
-                  <div class="eyebrow">Highlight</div>
+                <div class="highlight-copy">
+                  <div class="highlight-kicker">
+                    <span class="highlight-number">${String(index + 1).padStart(2, '0')}</span>
+                    <span class="eyebrow">Highlight</span>
+                  </div>
                   <h3>${esc(item.title)}</h3>
                   ${item.subtitle ? `<p>${esc(item.subtitle)}</p>` : ''}
                   ${item.description ? `<p>${esc(item.description)}</p>` : ''}
