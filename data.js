@@ -176,9 +176,9 @@ window.PORTFOLIO_DATA = {
     {
       id: "vehicle-physics",
       order: 1,
-      title: "Realistic vehicle physics engine",
-      subtitle: "A self-initiated project where I designed and built an open-world arcade driving experience featuring rocket-boosted cars, jump mechanics, and physics-driven stunts, taking it from concept to a playable, market-ready product.",
-      description: "Owned the full development cycle, from concept and gameplay design to physics tuning, implementation, and publishing preparation, with a strong focus on game feel, stability, and player engagement.",
+      title: "Multiplayer car simulator",
+      subtitle: "A self-initiated Unity project where I designed and built an open-world multiplayer driving experience with Photon, rocket-boosted cars, jump mechanics, and physics-driven stunts.",
+      description: "Owned the full development cycle, from concept and gameplay design to vehicle physics, networked multiplayer implementation, synchronization, gameplay tuning, and publishing preparation, with a strong focus on game feel, stability, and player engagement.",
       links: [
         {
           label: "Android · Google Play Games",
@@ -189,7 +189,7 @@ window.PORTFOLIO_DATA = {
           url: "https://play.google.com/pc-store/games/details?id=com.Rocket.Car.Games.Rocket.Car.Speed.Driving"
         }
       ],
-      tags: ["C#", "Unity", "Blender", "Shaders", "VFX", "Particle System", "Analytics", "Ads", "In App Purchases"],
+      tags: ["C#", "Unity", "Photon", "Multiplayer", "Blender", "Shaders", "VFX", "Particle System", "Analytics", "Ads", "In App Purchases"],
       media: [
         {
           id: "h1",
@@ -197,6 +197,42 @@ window.PORTFOLIO_DATA = {
           url: "https://www.youtube-nocookie.com/embed/PcpaNqKoQtg",
           title: "Demo video",
           caption: "Short demo clip",
+          isPrimary: true
+        }
+      ]
+    },
+    {
+      id: "gamified-learning-unity",
+      order: 2,
+      title: "Gamified learning experiences for children",
+      subtitle: "Interactive Unity applications designed to make early learning feel playful, tactile, and rewarding for young children.",
+      description: "Built child-friendly learning activities with simple controls, clear feedback loops, and game-like progression, focusing on accessibility, visual clarity, and engagement for younger audiences.",
+      tags: ["C#", "Unity", "Educational Apps", "Gamification", "Touch Interaction", "UI", "Game Feel"],
+      media: [
+        {
+          id: "h2",
+          type: "image",
+          url: "./assets/images/highlights/gamified-learning-unity.jpg",
+          title: "Gamified learning Unity application",
+          caption: "Interactive learning activity built in Unity",
+          isPrimary: true
+        }
+      ]
+    },
+    {
+      id: "unity-cfd-wind-tunnel",
+      order: 3,
+      title: "GPU CFD wind tunnel prototype",
+      subtitle: "A Unity-based CFD tool for analyzing airflow behavior around objects at characteristic wind tunnel speeds.",
+      description: "Implemented the simulation and visualization pipeline with compute shaders and fragment shaders, enabling interactive flow analysis, quick object comparisons, and clear visual feedback directly inside Unity.",
+      tags: ["C#", "Unity", "CFD", "Compute Shaders", "Fragment Shaders", "GPU Programming", "Fluid Simulation", "Wind Tunnel"],
+      media: [
+        {
+          id: "h3",
+          type: "youtube",
+          url: "https://www.youtube-nocookie.com/embed/yTKRM2LV3sQ",
+          title: "Unity CFD wind tunnel demo",
+          caption: "GPU-based CFD simulation in Unity",
           isPrimary: true
         }
       ]
@@ -210,6 +246,8 @@ window.PORTFOLIO_DATA = {
         "C#",
         "C++",
         "Unity",
+        "Photon",
+        "Multiplayer",
         "Unreal",
         "Python",
         "MATLAB",
