@@ -145,8 +145,33 @@ window.PORTFOLIO_DATA = {
       ]
     },
     {
-      id: "atexis",
+      id: "aertec",
       order: 3,
+      start: "2019",
+      end: "2020",
+      role: "Aircraft Systems Engineer | A400M",
+      company: "AERTEC Solutions",
+      location: "Getafe",
+      summary: "Coordinated maintenance tasks carried out during the A400M retrofit.",
+      bullets: [
+        "Coordinated retrofit tasks with multidisciplinary engineering and maintenance teams",
+        "Used the AMM to define the required maintenance tasks needed to prepare the aircraft for customer delivery"
+      ],
+      tags: ["Aircraft Systems", "Retrofit", "AMM (Aircraft Maintenance Manual)"],
+      media: [
+        {
+          id: "m4",
+          type: "image",
+          url: "./assets/images/experience/aertec-a400m.png",
+          title: "A400M aircraft on runway",
+          caption: "A400M retrofit support",
+          isPrimary: true
+        }
+      ]
+    },
+    {
+      id: "atexis",
+      order: 4,
       start: "2017",
       end: "2019",
       role: "Simulation Engineer | Virtual Procedure Trainer",
